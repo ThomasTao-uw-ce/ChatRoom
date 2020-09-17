@@ -19,6 +19,9 @@ body
 
 </style>
 <script src=".js/helper.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script> 
 var nickname = "";
@@ -26,10 +29,12 @@ var first = 0;
 var c_type = 0;
 var uid =<?php if(isset($_SESSION["userid"])) {echo $_SESSION["userid"];}?>;
 $(document).ready(function(){
-  "use strict";
   alert(uid);
   var send = {userid:0};
  send.userid = uid;
+  "use strict";
+  
+ 
 
 
  var connecting = $('#connecting');
@@ -41,7 +46,7 @@ $(document).ready(function(){
       ));
       return;
     }
-    var connection = new WebSocket('ws://192.168.56.1:8080');
+    var connection = new WebSocket('ws://domain'); // Domain of WebSocket server.
     connection.onopen = function () {
 
     connecting.hide();
@@ -784,7 +789,7 @@ alert("leave");
 var sent = {userid:0, target:0};
 sent.userid = uid;
 var group_id=$(this).parent().attr('id');
-sent.target = slice(1);
+sent.target = group_id.slice(1);
 $.ajax({
 method: "POST",
 url: "workers.php?type=17",
@@ -792,7 +797,7 @@ data: sent,
 cache: false,
 
 });
-
+$(this).parent().remove();
 
 });
 
@@ -951,7 +956,7 @@ document.getElementById("message_type").value = "";
 <body>
 <button class = "log_out" onclick = "logout()">Log Out</button>
 <div class = "popbox" id = "popbox1" style = "display:none;"></div>
-<div class = "connecting" id = "connecting" >
+<div class = "connecting" id = "connecting" style = "display:none;">
 Please wait until connected to the server.
 </div>
 <div class = "main_box">
@@ -983,7 +988,8 @@ Please wait until connected to the server.
 </div>
 </div>
 <div id = "chatbox" class = "chat_box" >
-
+<div id = "emoji">
+</div>
 
 <div id = "chat_message">
 <div id="msg_end" style="height:0px; overflow:hidden"></div>
@@ -996,6 +1002,8 @@ Please wait until connected to the server.
 <div name = "input_box" id = "input_box" class = "input_box">
 
 <div class = "tool_list">
+<div id = "on">
+</div>
 </div>
 
 <textarea  name = "message_type" id = "message_type" class = "text_area" ></textarea>
@@ -1007,12 +1015,56 @@ Please wait until connected to the server.
 
 
 <script>
-
 var usid = <?php if(isset($_SESSION["userid"])) {echo $_SESSION["userid"];}?>;
-
-
 </script>
-
+<script type="text/babel">
+class Frame extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {shown: "sss"};
+  }
+  select = (event) => {
+  let emojis = "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️";
+  var emoji= document.getElementById('emoji'); 
+  let left = emoji.getBoundingClientRect().left;
+  let top =emoji.getBoundingClientRect().top;
+  let x = Math.floor((event.clientX+30.5-left)/26.8);
+  let y = Math.floor((event.clientY+18-top)/21.8);
+  let num = x + 15*(y-1);
+  let emo = emojis.slice(3*(num-1),3*num-1);
+  this.setState({shown: emo});
+  var line= document.getElementById('message_type'); 
+  var content = $(line).val();
+  var after = content + emo;
+  $(line).val(after);
+  $(emoji).toggle();
+  line.focus();
+  
+  }
+    render() {
+    
+    
+    return <span onClick ={this.select}>😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 
+      😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞
+       😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳
+        🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 
+        🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷
+         🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️</span>;
+         
+  }
+}
+ReactDOM.render(<Frame />, document.getElementById('emoji'));
+class SEmoji extends React.Component {
+  show_hide = () => {
+  var emoji= document.getElementById('emoji'); 
+  $(emoji).toggle();
+  }
+  render() {
+    return <span onClick ={this.show_hide}>😀</span>;
+  }
+}
+ReactDOM.render(<SEmoji />, document.getElementById('on'));
+</script>
 </body>
 </html>
 
