@@ -1,12 +1,12 @@
 <?php
 // Start the session
 session_start();
-include '.php/functions.php';
+
 ?>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-<link rel="stylesheet" type="text/css" href=".css/WebSetting.css"/>
+<link rel="stylesheet" type="text/css" href="css/WebSetting.css"/>
 <style>
 body
 {
@@ -15,6 +15,7 @@ body
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>Log in</title>
 </head>
 
 <body>
@@ -69,7 +70,7 @@ unset($_SESSION["username"]);
 <script>
 function go_signup() {
 
-document.location = 'SignUp.php';
+document.location = '../signup';
 }
 function show_password() {
   var x = document.getElementById("password");
@@ -91,7 +92,7 @@ function decide_jump(){
   {
     $.ajax({
   method: "POST",
-  url: "workers.php?type=2",
+  url: "../workers.php?type=2",
   data: sent,
   cache: false,
   success: function(rep){	
