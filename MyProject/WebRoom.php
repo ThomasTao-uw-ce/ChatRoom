@@ -4,12 +4,12 @@
 // Start the session
 session_start();
 
-include '.php/functions.php';
+include 'php/functions.php';
 ?>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-<link rel="stylesheet" type="text/css" href=".css/WebSetting.css"/>
+<link rel="stylesheet" type="text/css" href="css/WebSetting.css"/>
 
 <style>
 body
@@ -18,7 +18,7 @@ body
 }
 
 </style>
-<script src=".js/helper.js"></script>
+<script src="js/helper.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script> 
 var nickname = "";

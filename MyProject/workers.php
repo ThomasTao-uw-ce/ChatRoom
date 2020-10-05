@@ -43,7 +43,7 @@ if($_REQUEST["type"] == 2)
 	else 
 	{
 	
-		echo "index.php";
+		echo "login.php";
 		//echo "http://localhost/ChatRoom/web_login.php";
 	}
 	

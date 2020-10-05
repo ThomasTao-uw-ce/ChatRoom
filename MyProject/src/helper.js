@@ -972,7 +972,7 @@ sent.target = search_user.value;
 
 function logout() {
  
-  document.location = 'index.php';
+  document.location = 'login.php';
   var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", "workers.php?type=22", true);
     xmlhttp.send();

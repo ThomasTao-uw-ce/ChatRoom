@@ -6,7 +6,7 @@ session_start();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <head>
-<link rel="stylesheet" type="text/css" href=".css/WebSetting.css"/>
+<link rel="stylesheet" type="text/css" href="css/WebSetting.css"/>
 <style>
 body
 {
@@ -19,7 +19,7 @@ body
 
 <body>
 <div class = "login_box">
-<p id = "jump"><a href="index.php">Successful account registration, please click to jump to the login web.</a></p>
+<p id = "jump"><a href="login.php">Successful account registration, please click to jump to the login web.</a></p>
 </div>
 </body>
 </html>
