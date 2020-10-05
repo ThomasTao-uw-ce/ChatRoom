@@ -16,8 +16,14 @@ body
 
 <body>
 <h1>Welcome!</h1>
-<a href="login.php">Log in</a>
-<a href="SignUp.php">Sign up</a>
-
+<button class="submit_button" onclick = "jump('login.php')">Log in</button>
+<button class="submit_button" onclick = "jump('SignUp.php')">Sign Up</button>
+<script>
+  function jump(url)
+  {
+    document.location = url;
+  }
+</script>
 </body>
 </html>
+
